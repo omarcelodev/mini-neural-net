@@ -25,7 +25,6 @@ class RedeNeural():
 
     def backward(self, X, y, lr):
         dL = mse_derivada(self.A2, y)
-
         dZ2 = dL * sigmoid_derivada(self.z2)
 
         dW2 = np.dot(self.A1.T, dZ2)
