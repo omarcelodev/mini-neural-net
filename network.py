@@ -2,8 +2,8 @@ import numpy as np
 from activations import sigmoid, sigmoid_derivada
 from loss import mse, mse_derivada
 
-class RedeNeural():
-    def __init__(self, input_size, hidden_size, output_size):
+class RedeNeural(): # Classe para representar a rede neural, contendo os pesos, bias e os métodos de forward e backward
+    def __init__(self, input_size, hidden_size, output_size): # Incialização dos pesos e bias para a camada oculta 
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
@@ -14,7 +14,7 @@ class RedeNeural():
         self.W2 = np.random.randn(hidden_size, output_size) 
         self.b2 = np.zeros((1, output_size))
 
-    def forward(self, X):
+    def forward(self, X): # Método para realizar a propagação para frente, calculando as ativações da camada oculta
         self.z1 = np.dot(X, self.W1) + self.b1
         self.A1 = sigmoid(self.z1)
 
@@ -23,7 +23,7 @@ class RedeNeural():
 
         return self.A2
 
-    def backward(self, X, y, lr):
+    def backward(self, X, y, lr): # Método para realizar a propagação para trás, calculando os gradientes e atualizando os pesos e bias
         dL = mse_derivada(self.A2, y)
         dZ2 = dL * sigmoid_derivada(self.z2)
 
@@ -40,7 +40,7 @@ class RedeNeural():
         self.W1 -= lr * dW1
         self.b1 -= lr * db1
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Teste para verificar o funcionamento correto da rede neural
     net = RedeNeural(2, 4, 1)
     X = np.array([
         [0,0], 

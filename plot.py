@@ -3,6 +3,8 @@ import numpy as np
 from network import RedeNeural
 from loss import mse
 
+# Plot da curva de perda durante o treinamento da rede neural
+
 X = np.array([
     [0,0],
     [0,1],
@@ -24,7 +26,7 @@ for epoch in range(epochs):
     if epoch % 100 == 0:
         losses.append(loss)
 
-epochs_axis = list(range(0, epochs, 100))
+epochs_axis = list(range(0, epochs, 100)) #
 plt.plot(epochs_axis, losses)
 
 plt.title("Curva de perda")
