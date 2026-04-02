@@ -105,4 +105,4 @@ Menos de 3% de erro em todos os exemplos.
 
 ![Loss Curve](loss_curve.png)
 
-A rede aprende quase tudo nas primeiras 50 épocas — o restante é refinamento.
+A rede aprende a maior parte até a época 2000 — o restante é refinamento gradual até estabilizar próximo de zero.
