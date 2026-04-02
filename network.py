@@ -8,10 +8,10 @@ class RedeNeural():
         self.hidden_size = hidden_size
         self.output_size = output_size
 
-        self.W1 = np.random.rand(input_size, hidden_size)
+        self.W1 = np.random.randn(input_size, hidden_size) 
         self.b1 = np.zeros((1, hidden_size))
 
-        self.W2 = np.random.rand(hidden_size, output_size)
+        self.W2 = np.random.randn(hidden_size, output_size) 
         self.b2 = np.zeros((1, output_size))
 
     def forward(self, X):

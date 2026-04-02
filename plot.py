@@ -14,7 +14,7 @@ y = np.array([[0], [1], [1], [0]])
 losses = []
 
 net = RedeNeural(2, 8, 1)
-epochs = 20000
+epochs = 10000
 lr = 0.3
 
 for epoch in range(epochs):
@@ -24,7 +24,9 @@ for epoch in range(epochs):
     if epoch % 100 == 0:
         losses.append(loss)
 
-plt.plot(losses)
+epochs_axis = list(range(0, epochs, 100))
+plt.plot(epochs_axis, losses)
+
 plt.title("Curva de perda")
 plt.xlabel("Epoch")
 plt.ylabel("MSE Loss")
