@@ -13,9 +13,9 @@ y = np.array([[0], [1], [1], [0]])
 
 losses = []
 
-net = RedeNeural(2, 4, 1)
-epochs = 10000
-lr = 0.1
+net = RedeNeural(2, 8, 1)
+epochs = 20000
+lr = 0.3
 
 for epoch in range(epochs):
     y_pred = net.forward(X)
