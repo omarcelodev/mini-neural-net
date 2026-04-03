@@ -31,7 +31,7 @@ mini-neural-net/
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/mini-neural-net.git
+git clone https://github.com/omarcelodev/mini-neural-net.git
 cd mini-neural-net
 
 # Crie o ambiente virtual e instale as dependências
