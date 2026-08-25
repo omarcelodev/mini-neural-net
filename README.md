@@ -1,108 +1,184 @@
 # Mini Neural Network
 
-Rede neural de 2 camadas implementada **apenas com NumPy** — sem Keras, sem PyTorch, sem sklearn.
+A two-layer neural network implemented from scratch using only NumPy — without Keras, PyTorch, TensorFlow, or scikit-learn.
 
-O objetivo é entender como ML funciona por baixo dos frameworks: forward pass, backpropagation e atualização de pesos feitos à mão. Treinada no dataset **XOR** como ponto de partida.
+The goal of this project is to understand how neural networks work beneath high-level machine learning frameworks by manually implementing forward propagation, backpropagation, gradient calculation, and weight updates.
 
----
+The network is trained on the XOR problem as a simple starting point.
 
-## Stack
+## Technologies
 
-- `numpy` — toda a matemática (álgebra linear, gradientes, broadcasting)
-- `matplotlib` — visualização da loss curve durante o treino
-- `Python` — sem frameworks
+* `Python`
+* `NumPy` — linear algebra, gradients, matrix operations, and broadcasting
+* `Matplotlib` — visualization of the training loss curve
 
----
+No machine learning frameworks are used.
 
-## Estrutura
+## Project Structure
 
-```
+```text
 mini-neural-net/
-├── activations.py  # sigmoid e sua derivada
-├── loss.py         # MSE e sua derivada
-├── network.py      # classe RedeNeural (forward + backward)
-├── train.py        # loop de treino
-└── plot.py         # curva de loss
+├── activations.py   # Sigmoid activation function and derivative
+├── loss.py          # Mean Squared Error and derivative
+├── network.py       # NeuralNetwork implementation
+├── train.py         # Training loop
+└── plot.py          # Loss curve visualization
 ```
 
----
+## Architecture
 
-## Como rodar
+The network uses a simple fully connected architecture:
 
-```bash
-# Clone o repositório
-git clone https://github.com/omarcelodev/mini-neural-net.git
-cd mini-neural-net
-
-# Crie o ambiente virtual e instale as dependências
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-# Rode o treino
-python train.py
-
-# Gere o gráfico da loss curve
-python plot.py
+```text
+Input Layer (2)
+      |
+      v
+Hidden Layer (8 neurons)
+      |
+      v
+Output Layer (1)
 ```
 
----
+### Forward Propagation
 
-## Arquitetura
-
-```
-Input (2) → Camada Oculta (8 neurônios) → Output (1)
-```
-
-**Forward pass:**
-```
+```text
 Z1 = X · W1 + b1
 A1 = sigmoid(Z1)
+
 Z2 = A1 · W2 + b2
-A2 = sigmoid(Z2)  ← previsão
+A2 = sigmoid(Z2)
 ```
 
-**Backward pass:**
+`A2` represents the network prediction.
+
+### Backpropagation
+
+The gradients are calculated manually using the chain rule:
+
+```text
+∂L/∂ŷ
+   |
+   v
+∂L/∂Z
+   |
+   v
+∂L/∂W and ∂L/∂b
 ```
-∂L/∂ŷ → ∂L/∂Z (via sigmoid') → ∂L/∂W e ∂L/∂b
-W -= lr · ∂L/∂W
-b -= lr · ∂L/∂b
+
+The weights and biases are then updated using gradient descent:
+
+```text
+W -= learning_rate * ∂L/∂W
+b -= learning_rate * ∂L/∂b
 ```
 
----
+## XOR Dataset
 
-## Dataset: XOR
+XOR is a classic example of a problem that is not linearly separable, meaning that a simple linear model cannot solve it correctly.
 
-O XOR não é linearmente separável — a rede precisa de pelo menos uma camada oculta pra resolver.
+The network therefore uses a hidden layer to learn the nonlinear relationship between the inputs and outputs.
 
-| Entrada | Saída |
-|---------|-------|
-| [0, 0]  | 0     |
-| [0, 1]  | 1     |
-| [1, 0]  | 1     |
-| [1, 1]  | 0     |
+| Input    | Expected Output |
+| -------- | --------------: |
+| `[0, 0]` |             `0` |
+| `[0, 1]` |             `1` |
+| `[1, 0]` |             `1` |
+| `[1, 1]` |             `0` |
 
----
+## Training
 
-## Resultado
-
-Parâmetros usados:
+The example configuration uses:
 
 ```python
 net = NeuralNetwork(2, 8, 1)
+
 epochs = 10000
-lr = 0.3
+learning_rate = 0.3
 ```
 
-Previsões finais:
+The network progressively adjusts its weights and biases by minimizing the loss through backpropagation and gradient descent.
 
-```
-Esperado:  [0,     1,     1,     0    ]
-Obtido:    [0.018, 0.973, 0.973, 0.0312]
+## Results
+
+Example final predictions:
+
+```text
+Expected: [0,     1,     1,     0]
+Output:   [0.018, 0.973, 0.973, 0.0312]
 ```
 
-Menos de 3% de erro em todos os exemplos.
+The model reaches less than approximately 3% absolute error for each XOR example in this training run.
+
+The loss decreases rapidly during the first part of training and gradually stabilizes closer to zero.
 
 ![Loss Curve](loss_curve.png)
 
-A rede aprende a maior parte até a época 2000 — o restante é refinamento gradual até estabilizar próximo de zero.
+## Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/omarcelodev/mini-neural-net.git
+cd mini-neural-net
+```
+
+Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate it:
+
+### Linux / macOS
+
+```bash
+source .venv/bin/activate
+```
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+Install the dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the training:
+
+```bash
+python train.py
+```
+
+Generate the loss curve:
+
+```bash
+python plot.py
+```
+
+## What I Learned
+
+This project was created to explore the mathematical and computational foundations of neural networks without relying on high-level machine learning frameworks.
+
+It covers concepts such as:
+
+* matrix operations;
+* activation functions;
+* loss functions;
+* forward propagation;
+* backpropagation;
+* gradient descent;
+* manual parameter updates;
+* nonlinear classification.
+
+Implementing these components directly with NumPy helps make the internal mechanics of neural network training easier to understand.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+© 2026 Marcelo Gomes
